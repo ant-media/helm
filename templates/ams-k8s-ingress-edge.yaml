@@ -23,7 +23,7 @@ spec:
             port:
               number: 5080
   tls:
-  - secretName: antmedia-cert-edge
-    hosts:
+    - hosts:
       - {{ .Values.edge }}
+      secretName: ams-certificate-edge
 {{end}}
