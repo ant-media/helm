@@ -3,13 +3,13 @@ entries:
   antmedia:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-12-15T16:31:31.382163009+03:00"
+    created: "2022-12-15T17:03:15.229757156+03:00"
     dependencies:
     - name: nginx-ingress
       repository: https://helm.nginx.com/stable
       version: 0.13.0
     description: A Helm chart for Kubernetes
-    digest: 0de9206664c475eff15229f8399d84ea4af9f325bb00390dcb5a5cb545f09fa5
+    digest: 55b3384a26004e5460fdeb0cc8399ae01325fb2f8168d0d7d31477d5732cd389
     name: antmedia
     type: application
     urls:
@@ -18,7 +18,7 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 2.2.0
-    created: "2022-12-15T16:31:31.384617309+03:00"
+    created: "2022-12-15T17:03:15.23104144+03:00"
     description: NGINX Ingress Controller
     digest: df5c66786db655c94d4d16904e31962893c9f7d09c44f6d602ba0399025f6497
     home: https://github.com/nginxinc/kubernetes-ingress
@@ -36,4 +36,4 @@ entries:
     urls:
     - https://ant-media.github.io/helm/charts/nginx-ingress-0.13.0.tgz
     version: 0.13.0
-generated: "2022-12-15T16:31:31.379439203+03:00"
+generated: "2022-12-15T17:03:15.227254038+03:00"
