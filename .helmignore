@@ -4,9 +4,6 @@
 # Match any file or path named .git
 .git
 
-# Match any text file
-*.txt
-
 # Match any file under subdir matching temp*
 */temp*
 
