@@ -16,7 +16,7 @@ Ant Media Server installs the following
 ## Installing the Chart
 Add the AMS repository to Helm:
 ```shell script
-helm repo add eks https://ant-media.github.io/Scripts/helm
+helm repo add antmedia https://ant-media.github.io/helm
 helm update
 helm install antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com}
 ```
