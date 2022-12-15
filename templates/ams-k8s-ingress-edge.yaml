@@ -21,4 +21,8 @@ spec:
             name: ant-media-server-edge
             port:
               number: 5080
+  tls:
+  - secretName: antmedia-cert-edge
+    hosts:
+      - {{ .Values.edge }}
 {{end}}

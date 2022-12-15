@@ -21,3 +21,9 @@ spec:
             port:
               number: 5080
 
+  tls:
+  - secretName: antmedia-cert-origin
+    hosts:
+      - {{ .Values.origin }}
+
+
