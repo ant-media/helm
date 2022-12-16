@@ -22,9 +22,86 @@ helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --se
 ```
 
 ## Installing SSL 
-If you are going to use Let's Encrypt, you should create your DNS records according to the ingress IP addresses in the `kubectl get ingress` output after installation and follow the document below.
+By default, a self-singed certificate comes in the Ant Media Server Kubernetes structure that you install with Helm. If you want, you can replace it with your own certificate as below or follow the steps below for Let's Encrypt.
 
-https://resources.antmedia.io/docs/ams-kubernetes-deployment#-to-install-an-ssl-certificate
+kubectl create secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
+
+### Let's Encrypt 
+
+After installation run the below command to get Ingress IP address.
+
+kubectl get ingress
+
+Example Output:
+
+kubectl get ingress
+NAME                      CLASS    HOSTS                   ADDRESS        PORTS     AGE
+ant-media-server-origin   <none>   origin.antmedia.cloud   162.19.225.6   80, 443   9m59s
+
+Update the DNS record according to the HOSTS and ADDRESS information.
+
+You can do DNS query as follows.
+
+dig origin.antmedia.cloud +noall +answer
+
+Now let's move on to Let's Encrypt installation.
+
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
+
+Create a YAML file in your working directory and name it ams-k8s-issuer-production.yaml Add the following content (Do not forget to change the email address.)
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: change_me
+    privateKeySecretRef:
+      name: letsencrypt-production
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+
+kubectl create -f ams-production-issuer.yaml
+
+When you run the kubectl get clusterissuers command, you will see an output like the one below.
+
+letsencrypt-production   True    1m
+
+We use the antmedia-cert-edge and ant-media-cert-origin secrets by default for the Origin and Edge sides, and we delete them because there is a self-signed serial on them.
+
+kubectl delete secret antmedia-cert-edge
+kubectl delete secret antmedia-cert-origin
+
+We are editing or recreating our Ingress.
+
+kubectl edit ingress ant-media-server-origin
+
+You must add an annotation "cert-manager.io/cluster-issuer: letsencrypt-production" in the ingress configuration with the issuer or cluster issuer name.
+
+Example:
+
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.class: nginx
+    meta.helm.sh/release-name: antmedia
+    meta.helm.sh/release-namespace: default
+
+Then wait for the certificate to be created.
+
+If everything went well, the output of the "kubectl get certificate" command will show the value "True" as follows.
+
+kubectl get certificate
+NAME                   READY   SECRET                 AGE
+antmedia-cert-origin   True    antmedia-cert-origin   21m
+
 
 ## Upgrade
 The old installation must be uninstalled completely before installing the new version.
