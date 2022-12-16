@@ -2,38 +2,47 @@ apiVersion: v1
 entries:
   antmedia:
   - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-12-15T18:00:49.543258249+03:00"
+    appVersion: 1.5.1
+    created: "2022-12-16T19:14:27.366870959+03:00"
     dependencies:
-    - name: nginx-ingress
-      repository: https://helm.nginx.com/stable
-      version: 0.13.0
+    - name: ingress-nginx
+      repository: https://kubernetes.github.io/ingress-nginx
+      version: 4.4.0
     description: A Helm chart for Kubernetes
-    digest: 09017848cede1e59bd8b95938cdc481273e275f0fa5c164f9c406c47e1c81a43
+    digest: 1aabfb310652c776ad19137357a4b31401130b217abbf2f895add0564833f19b
     name: antmedia
     type: application
     urls:
-    - https://ant-media.github.io/helm/antmedia-2.5.1.tgz
+    - https://ant-media-server.github.io/helm/antmedia-2.5.1.tgz
     version: 2.5.1
-  nginx-ingress:
-  - apiVersion: v1
-    appVersion: 2.2.0
-    created: "2022-12-15T18:00:49.544471076+03:00"
-    description: NGINX Ingress Controller
-    digest: df5c66786db655c94d4d16904e31962893c9f7d09c44f6d602ba0399025f6497
-    home: https://github.com/nginxinc/kubernetes-ingress
-    icon: https://raw.githubusercontent.com/nginxinc/kubernetes-ingress/v2.2.0/deployments/helm-chart/chart-icon.png
+  ingress-nginx:
+  - annotations:
+      artifacthub.io/changes: |
+        - Adding support for disabling liveness and readiness probes to the Helm chart
+        - add:(admission-webhooks) ability to set securityContext
+        - Updated Helm chart to use the fullname for the electionID if not specified
+        - Rename controller-wehbooks-networkpolicy.yaml
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.5.1
+    created: "2022-12-16T19:14:27.370285792+03:00"
+    description: Ingress controller for Kubernetes using NGINX as a reverse proxy
+      and load balancer
+    digest: 5c5ffcd4a19377f9e2eeb40fd8c0a2a7a9f851db74453247c357c83e1775c330
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
     keywords:
     - ingress
     - nginx
-    kubeVersion: '>= 1.19.0-0'
+    kubeVersion: '>=1.20.0-0'
     maintainers:
-    - email: kubernetes@nginx.com
-      name: nginxinc
-    name: nginx-ingress
+    - name: rikatz
+    - name: strongjz
+    - name: tao12345666333
+    name: ingress-nginx
     sources:
-    - https://github.com/nginxinc/kubernetes-ingress/tree/v2.2.0/deployments/helm-chart
+    - https://github.com/kubernetes/ingress-nginx
     urls:
-    - https://ant-media.github.io/helm/charts/nginx-ingress-0.13.0.tgz
-    version: 0.13.0
-generated: "2022-12-15T18:00:49.541533348+03:00"
+    - https://ant-media-server.github.io/helm/charts/ingress-nginx-4.4.0.tgz
+    version: 4.4.0
+generated: "2022-12-16T19:14:27.363266327+03:00"
