@@ -25,5 +25,5 @@ spec:
   tls:
     - hosts:
       - {{ .Values.edge }}
-      secretName: ams-certificate-edge
+      secretName: antmedia-cert-edge
 {{end}}

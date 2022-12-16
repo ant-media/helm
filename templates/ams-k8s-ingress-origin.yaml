@@ -25,6 +25,6 @@ spec:
   tls:
     - hosts:
       - {{ .Values.origin }}
-      secretName: ams-certificate-origin
+      secretName: antmedia-cert-origin
 
 
