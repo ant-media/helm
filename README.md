@@ -39,7 +39,8 @@ Example Output:
 
 ```
 NAME                      CLASS    HOSTS                   ADDRESS        PORTS     AGE
-ant-media-server-origin   <none>   origin.antmedia.cloud   162.19.225.6   80, 443   9m59s
+ant-media-server-origin   <none>   origin.antmedia.cloud   x.x.x.x        80, 443   9m45s
+ant-media-server-edge     <none>   edge.antmedia.cloud     x.x.x.x        80, 443   9m55s
 ```
 #### Update the DNS record according to the HOSTS and ADDRESS values.
 
