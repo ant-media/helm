@@ -3,7 +3,7 @@
 # This script automatically installs Let's Encrypt certificate to your Ant Media Server Cluster.
 #
 
-namespace="default"
+namespace="antmedia"
 ingress_controller_name="antmedia-ingress-nginx-controller"
 get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
 declare -A hostname
