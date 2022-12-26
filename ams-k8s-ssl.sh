@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # This script automatically installs Let's Encrypt certificate to your Ant Media Server Cluster.
-# If you use different namespace or deployment names, you must make the changes manually.
+# If you use different namespace or deployment/ingress etc. names, you must make the changes manually.
 #
 
 namespace="antmedia"
