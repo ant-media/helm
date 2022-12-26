@@ -30,6 +30,25 @@ kubectl create -n antmedia secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CE
 
 #### Let's Encrypt 
 
+If you want, you can do this with the script we have prepared or manually by following the steps below.
+
+##### Installation with script
+
+```sh
+wget https://raw.githubusercontent.com/ant-media/helm/add_helm_repo/ams-k8s-ssl.sh
+
+bash ams-k8s-ssl.sh
+```
+
+Then wait for the certificate to be created.
+
+If everything went well, the output of the `kubectl get -n antmedia certificate` command will show the value `True` as follows.
+```
+NAME                   READY   SECRET                 AGE
+antmedia-cert-origin   True    antmedia-cert-origin   21m
+```
+##### Step by step installation
+
 After installation run the below command to get Ingress IP address.
 ```sh
 kubectl get ingress -n antmedia
