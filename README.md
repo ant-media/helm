@@ -18,21 +18,21 @@ Add the AMS repository to Helm:
 ```shell script
 helm repo add antmedia https://ant-media.github.io/helm
 helm repo update
-helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com}
+helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com} --namespace antmedia
 ```
 
 ## Installing SSL 
 By default, a self-singed certificate comes in the Ant Media Server Kubernetes structure that you install with Helm. If you want, you can replace it with your own certificate as below or follow the steps below for Let's Encrypt.
 
 ```sh
-kubectl create secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
+kubectl create -n antmedia secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE} 
 ```
 
 #### Let's Encrypt 
 
 After installation run the below command to get Ingress IP address.
 ```sh
-kubectl get ingress
+kubectl get ingress -n antmedia
 ```
 
 Example Output:
@@ -80,12 +80,12 @@ letsencrypt-production   True    1m
 ```
 We use the **antmedia-cert-edge** and **ant-media-cert-origin** secrets by default for the Origin and Edge sides, and we delete them because there is a self-signed serial on them.
 ```sh
-kubectl delete secret antmedia-cert-edge
-kubectl delete secret antmedia-cert-origin
+kubectl delete -n antmedia secret antmedia-cert-edge 
+kubectl delete -n antmedia secret antmedia-cert-origin
 ```
 We should edit or recreate our Ingresses.
 ```sh
-kubectl edit ingress ant-media-server-origin
+kubectl edit -n antmedia ingress ant-media-server-origin
 ```
 You must add an annotation **cert-manager.io/cluster-issuer: letsencrypt-production** in the ingress configuration with the issuer or cluster issuer name.
 
@@ -100,7 +100,7 @@ metadata:
 ```
 Then wait for the certificate to be created.
 
-If everything went well, the output of the `kubectl get certificate` command will show the value `True` as follows.
+If everything went well, the output of the `kubectl get -n antmedia certificate` command will show the value `True` as follows.
 ```
 NAME                   READY   SECRET                 AGE
 antmedia-cert-origin   True    antmedia-cert-origin   21m
@@ -111,7 +111,7 @@ The old installation must be uninstalled completely before installing the new ve
 
 ## Uninstalling the Chart
 ```sh
-helm delete antmedia 
+helm delete antmedia -n antmedia
 ```
 
 ## Parameters
@@ -134,7 +134,7 @@ helm delete antmedia
 
 ## Example Usage
 ```
-helm install antmedia antmedia/antmedia --set origin=origin.antmedia.io --set edge=edge.antmedia.io --set autoscalingEdge.targetCPUUtilizationPercentage=20 --set autoscalingEdge.minReplicas=2
+helm install antmedia antmedia/antmedia --set origin=origin.antmedia.io --set edge=edge.antmedia.io --set autoscalingEdge.targetCPUUtilizationPercentage=20 --set autoscalingEdge.minReplicas=2 --namespace antmedia
 
 ```
 
