@@ -15,10 +15,6 @@ if [ "$check_edge" != "0" ]; then
 else
 	hostname[origin]=`kubectl get -n $namespace ingress ant-media-server-origin -o jsonpath='{.spec.rules[0].host}'`
 fi
-# Delete array if not set the Edge cluster
-#if [ -z ${hostname[edge]} ]; then
-#        unset hostname[edge]
-#fi
 
 echo -e "\033[0;31mYou must have the kubectl tool installed and accessing the Kubernetes cluster.\033[0m"
 
