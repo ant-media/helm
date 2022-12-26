@@ -103,7 +103,8 @@ We use the **antmedia-cert-edge** and **ant-media-cert-origin** secrets by defau
 kubectl delete -n antmedia secret antmedia-cert-edge 
 kubectl delete -n antmedia secret antmedia-cert-origin
 ```
-We should edit or recreate our Ingresses.
+We should edit/recreate the ingresses as follows or you can run directly this command `kubectl annotate ingress cert-manager.io/cluster-issuer=letsencrypt-production --all`
+
 ```sh
 kubectl edit -n antmedia ingress ant-media-server-origin
 ```
