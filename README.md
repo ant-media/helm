@@ -74,7 +74,7 @@ spec:
 ```sh
 kubectl create -f ams-production-issuer.yaml
 ```
-When you run the `kubectl get clusterissuers` command, you will see an output like the one below.
+When you run the `kubectl get -n antmedia clusterissuers` command, you will see an output like the one below.
 ```
 letsencrypt-production   True    1m
 ```
