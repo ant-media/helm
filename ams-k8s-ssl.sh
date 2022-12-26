@@ -24,10 +24,10 @@ if ! [ -x "$(which dig)" ]; then
 fi
 
 for hostnames in "${hostname[@]}"; do
-	if [ `dig $hostnames +noall +answer |wc -l` == "0" ]; then
+	if [ `dig @8.8.8.8 $hostnames +noall +answer |wc -l` == "0" ]; then
 		echo "Please make sure your DNS record is correct then run the script again later."
 		exit 1
-	elif [ `dig $hostnames +short` != "$get_ingress" ]; then
+	elif [ `dig @8.8.8.8 $hostnames +short` != "$get_ingress" ]; then
 		echo "Please make sure your DNS record is correct then run the script again later."
 		exit 1
 	fi
