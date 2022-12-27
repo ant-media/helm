@@ -5,8 +5,8 @@ Ant Media Server Helm chart for Kubernetes
 ## Introduction
 Ant Media Server installs the following
 - Edge/Origin pods
-- MongoDB 
-- Ingress
+- MongoDB pod
+- Ingress controller
 
 ## Prerequisites
 - Kubernetes >= 1.23
@@ -47,7 +47,7 @@ If everything went well, the output of the `kubectl get -n antmedia certificate`
 NAME                   READY   SECRET                 AGE
 antmedia-cert-origin   True    antmedia-cert-origin   21m
 ```
-##### Step by step installation
+##### Manual installation
 
 After installation run the below command to get Ingress IP address.
 ```sh
@@ -67,7 +67,7 @@ You can do DNS query as follows.
 ```sh
 dig origin.antmedia.cloud +noall +answer
 ```
-#### Now let's move on to Let's Encrypt installation.
+#### Now let's move on to cert-manager installation.
 ```sh
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
