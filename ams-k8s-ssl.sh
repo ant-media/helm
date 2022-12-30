@@ -73,7 +73,7 @@ sleep 10
 
 echo "If "kubectl get certificates -n antmedia" command return TRUE, you can understand that your certificates were installed without any problems."
 
-kubectl get cert
+kubectl get cert -n antmedia
 
 
 
