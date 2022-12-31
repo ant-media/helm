@@ -66,6 +66,7 @@ antmedia-cert-origin   True    antmedia-cert-origin   21m
 ```
 ##### Manual installation
 
+[Click here](https://resources.antmedia.io/docs/install-ssl-on-kubernetes-using-lets-encrypt) for step-by-step installation.
 
 ## Upgrade
 The old installation must be uninstalled completely before installing the new version.
