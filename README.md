@@ -18,7 +18,7 @@ Add the AMS repository to Helm:
 ```shell script
 helm repo add antmedia https://ant-media.github.io/helm
 helm repo update
-helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com} --namespace antmedia
+helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com} --namespace antmedia --create-namespace
 ```
 
 ## Installing SSL 
