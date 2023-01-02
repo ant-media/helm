@@ -18,7 +18,7 @@ Add the AMS repository to Helm:
 ```shell script
 helm repo add antmedia https://ant-media.github.io/helm
 helm repo update
-helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com} --namespace antmedia --create-namespace
+helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --set edge={edge}.{example.com} --set licenseKey="YOUR_LICENSE_KEY" --namespace antmedia --create-namespace
 ```
 
 ## Installing SSL 
@@ -85,6 +85,7 @@ helm delete antmedia -n antmedia
 | `edge`                                         | Domain name of Edge server                                                                               | `{}`                                                                     |
 | `hostNetwork`                                  | If `false`, use turn server                                                                              | `true`                                                                            |
 | `mongodb`                                      | MongoDB host                                                                                             | `mongo`                                                                     |
+| `licenseKey`                                      | License key                                                                                            | `{}`                                                                     |
 | `autoscalingOrigin.targetCPUUtilizationPercentage`                            | Target CPU utilization percentage for autoscaler for Origin                                                                          | `60`                                                                               |
 | `autoscalingOrigin.minReplicas`                                 | Minimum number of deployment replicas for the compute container.                                                                                | `1`                                                                               |
 | `autoscalingOrigin.maxReplicas`                                  | Maximum number of deployment replicas for the compute container.                                    | `10`                                                                               |
