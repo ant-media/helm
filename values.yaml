@@ -91,6 +91,7 @@ affinity: {}
 origin: {}
 edge: {}
 mongoDB: mongo
+licenseKey:
 
 hostNetwork: true
 

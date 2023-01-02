@@ -41,7 +41,7 @@ spec:
       - name: ant-media-server
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}        
-        args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}"]
+        args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}"]
         resources:
           requests:
              cpu: {{ .Values.resources.requests.cpu }}
