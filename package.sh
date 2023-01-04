@@ -1,5 +1,5 @@
 #!/bin/bash
-helm uninstall antmedia 
+helm uninstall antmedia -n antmedia
 rm *.tgz
 helm dependency update
 helm package $(pwd)/.
