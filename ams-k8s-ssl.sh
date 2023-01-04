@@ -35,12 +35,12 @@ for hostnames in "${hostname[@]}"; do
 done
 
 # Install cert-manager
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
+helm repo add jetstack https://charts.jetstack.io &> /dev/null
+helm repo update &> /dev/null
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> /dev/null
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml &> /dev/null
 
-kubectl create -f - <<EOF
+kubectl create -f - &> /dev/null <<EOF 
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -74,14 +74,14 @@ sleep 10
 
 if [ "$check_edge" != "0" ]; then
     if [ $edge_ssl == "True" ]; then
-    	echo "Edge certificate is installed."
+    	echo "Edge certificate installed."
     else
     	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-edge"
     fi
 fi
 
 if [ $origin_ssl == "True" ]; then
-	echo "Origin certificate is installed."
+	echo "Origin certificate installed."
 else
 	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-origin"
 fi
