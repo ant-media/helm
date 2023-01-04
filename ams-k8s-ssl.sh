@@ -8,7 +8,7 @@ namespace="antmedia"
 ingress_controller_name="antmedia-ingress-nginx-controller"
 get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
 declare -A hostname
-check_edge=`kubectl get ingress ant-media-server-edge 2> /dev/null  | wc -l`
+check_edge=`kubectl get -n $namespace ingress ant-media-server-edge 2> /dev/null  | wc -l`
 
 if [ "$check_edge" != "0" ]; then
 	hostname[edge]=`kubectl get -n $namespace ingress ant-media-server-edge -o jsonpath='{.spec.rules[0].host}'`
