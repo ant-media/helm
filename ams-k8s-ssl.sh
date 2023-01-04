@@ -40,6 +40,7 @@ helm repo update &> /dev/null
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> /dev/null
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml &> /dev/null
 
+# Create letsencrypt-production ClusterIssuer
 kubectl create -f - &> /dev/null <<EOF 
 ---
 apiVersion: cert-manager.io/v1
