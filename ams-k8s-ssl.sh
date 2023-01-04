@@ -69,11 +69,22 @@ fi
 # Update annotates for Let's Encrypt
 kubectl annotate -n $namespace ingress cert-manager.io/cluster-issuer=letsencrypt-production --all
 
+# Wait for verifying.
 sleep 10
 
-echo "If "kubectl get certificates -n antmedia" command return TRUE, you can understand that your certificates were installed without any problems."
+if [ "$check_edge" != "0" ]; then
+    if [ $edge_ssl == "True" ]; then
+    	echo "Edge certificate is installed."
+    else
+    	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-edge"
+    fi
+fi
 
-kubectl get cert -n antmedia
+if [ $origin_ssl == "True" ]; then
+	echo "Origin certificate is installed."
+else
+	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-origin"
+fi
 
 
 
