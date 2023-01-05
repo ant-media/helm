@@ -7,6 +7,9 @@
 namespace="antmedia"
 ingress_controller_name="antmedia-ingress-nginx-controller"
 get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
+origin_ssl=`kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n antmedia`
+edge_ssl=`kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n antmedia`
+
 declare -A hostname
 check_edge=`kubectl get -n $namespace ingress ant-media-server-edge 2> /dev/null  | wc -l`
 
