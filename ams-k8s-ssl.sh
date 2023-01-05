@@ -7,8 +7,8 @@
 namespace="antmedia"
 ingress_controller_name="antmedia-ingress-nginx-controller"
 get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
-origin_ssl=`kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n antmedia`
-edge_ssl=`kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n antmedia`
+origin_ssl="kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n antmedia --ignore-not-found=true"
+edge_ssl="kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n antmedia --ignore-not-found=true"
 
 declare -A hostname
 check_edge=`kubectl get -n $namespace ingress ant-media-server-edge 2> /dev/null  | wc -l`
@@ -64,31 +64,30 @@ EOF
 
 # Delete Self-Signed certificates
 if [ "$check_edge" != "0" ]; then
-    kubectl delete -n $namespace secret antmedia-cert-edge
-    kubectl delete -n $namespace secret antmedia-cert-origin
+    kubectl delete -n $namespace secret antmedia-cert-edge --ignore-not-found=true
+    kubectl delete -n $namespace secret antmedia-cert-origin --ignore-not-found=true
+    echo "Self-Signed certificates have been deleted."
 else
-	kubectl delete -n $namespace secret antmedia-cert-origin
+	kubectl delete -n $namespace secret antmedia-cert-origin --ignore-not-found=true
+	echo "Self-Signed certificate have been deleted."
 fi
 
 # Update annotates for Let's Encrypt
-kubectl annotate -n $namespace ingress cert-manager.io/cluster-issuer=letsencrypt-production --all
+kubectl annotate -n $namespace ingress cert-manager.io/cluster-issuer=letsencrypt-production --all 
 
 # Wait for verifying.
 sleep 10
 
 if [ "$check_edge" != "0" ]; then
-    if [ $edge_ssl == "True" ]; then
+    if [ $(eval $edge_ssl) == "True" ]; then
     	echo "Edge certificate installed."
     else
     	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-edge"
     fi
 fi
 
-if [ $origin_ssl == "True" ]; then
+if [ $(eval $origin_ssl) == "True" ]; then
 	echo "Origin certificate installed."
 else
 	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-origin"
 fi
-
-
-
