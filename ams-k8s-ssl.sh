@@ -82,12 +82,12 @@ if [ "$check_edge" != "0" ]; then
     if [ $(eval $edge_ssl) == "True" ]; then
     	echo "Edge certificate installed."
     else
-    	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-edge"
+    	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-edge -n $namespace"
     fi
 fi
 
 if [ $(eval $origin_ssl) == "True" ]; then
 	echo "Origin certificate installed."
 else
-	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-origin"
+	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert ant-media-server-origin -n $namespace"
 fi
