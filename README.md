@@ -80,7 +80,8 @@ helm delete antmedia -n antmedia
 
 | Parameter                               | Description                                                                                              | Default                                                                            |
 |------------------------------------------------| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `image`                                        | image repository                                                                                         | `antmedia/enterprise:latest` |
+| `image.repository`                                        | image repository                                                                                         | `antmedia/enterprise` |
+| `image.tag`                                        | image tag                                                                                         | `latest` |
 | `origin`                                       | Domain name of Origin server                                                                             | `{}`                                                                        |
 | `edge`                                         | Domain name of Edge server                                                                               | `{}`                                                                     |
 | `hostNetwork`                                  | If `false`, use turn server                                                                              | `true`                                                                            |
