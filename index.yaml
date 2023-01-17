@@ -3,13 +3,16 @@ entries:
   antmedia:
   - apiVersion: v2
     appVersion: 1.5.1
-    created: "2023-01-07T11:43:46.203741855+03:00"
+    created: "2023-01-17T20:21:51.784645828+03:00"
     dependencies:
     - name: ingress-nginx
       repository: https://kubernetes.github.io/ingress-nginx
-      version: 4.4.0
+      version: <= 4.4.0
+    - name: metrics-server
+      repository: https://kubernetes-sigs.github.io/metrics-server
+      version: <= 3.8.3
     description: A Helm chart for Kubernetes
-    digest: c6b0d29bc7e326efd22b1f08eea1fdc97aad6dbb6442cc37a9f622209c8f1f5f
+    digest: a1d7985a3456dca707d3a3a6c639dbf920c537290c8457f7cb9c6bb449c01e99
     name: antmedia
     type: application
     urls:
@@ -25,7 +28,7 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.5.1
-    created: "2023-01-07T11:43:46.206560508+03:00"
+    created: "2023-01-17T20:21:51.787722143+03:00"
     description: Ingress controller for Kubernetes using NGINX as a reverse proxy
       and load balancer
     digest: 5c5ffcd4a19377f9e2eeb40fd8c0a2a7a9f851db74453247c357c83e1775c330
@@ -45,4 +48,47 @@ entries:
     urls:
     - https://ant-media.github.io/helm/charts/ingress-nginx-4.4.0.tgz
     version: 4.4.0
-generated: "2023-01-07T11:43:46.198278651+03:00"
+  metrics-server:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: "Added support for topologySpreadConstraints."
+        - kind: added
+          description: "Set resource namespaces explicitly."
+        - kind: added
+          description: "Allow configuring TLS on the APIService."
+        - kind: added
+          description: "Enabled service monitor relabelling."
+        - kind: added
+          description: "Added ability to set the scheduler name."
+        - kind: added
+          description: "Added support for common labels."
+        - kind: changed
+          description: "Updated Metrics Server image to v0.6.2."
+    apiVersion: v2
+    appVersion: 0.6.2
+    created: "2023-01-17T20:21:51.788424262+03:00"
+    description: Metrics Server is a scalable, efficient source of container resource
+      metrics for Kubernetes built-in autoscaling pipelines.
+    digest: 6321fffa4bb34de22aee439a6893db329ff784e977e2204b5b57e8468ceb0e52
+    home: https://github.com/kubernetes-sigs/metrics-server
+    icon: https://avatars.githubusercontent.com/u/36015203?s=400&v=4
+    keywords:
+    - kubernetes
+    - metrics-server
+    - metrics
+    maintainers:
+    - name: stevehipwell
+      url: https://github.com/stevehipwell
+    - name: krmichel
+      url: https://github.com/krmichel
+    - name: endrec
+      url: https://github.com/endrec
+    name: metrics-server
+    sources:
+    - https://github.com/kubernetes-sigs/metrics-server
+    type: application
+    urls:
+    - https://ant-media.github.io/helm/charts/metrics-server-3.8.3.tgz
+    version: 3.8.3
+generated: "2023-01-17T20:21:51.779674517+03:00"
