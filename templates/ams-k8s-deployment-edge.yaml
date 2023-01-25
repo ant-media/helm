@@ -42,7 +42,7 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}        
         args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}"]
-        resources:
-          requests:
-             cpu: {{ .Values.resources.requests.cpu }}
+#        resources:
+#          requests:
+#             cpu: {{ .Values.resources.requests.cpu }}
 {{end}}

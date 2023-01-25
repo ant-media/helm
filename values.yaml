@@ -97,7 +97,7 @@ hostNetwork: true
 
 image:
   repository: antmedia/enterprise
-  tag: 2.5.1
+  tag: 2.5.3
   pullPolicy: IfNotPresent
 
 ingress:
