@@ -18,14 +18,13 @@ jobs:
       - name: Get version
         id: version
         run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT       
-      - name: Commit files  # transfer the new html files back into the repository
+      - name: Commit files  
         run: |
-          echo ${{ secrets.SECRET_TOKEN }}
           git config --global user.name  ${{ github.actor }}
-          git status
+          git config --global user.email "murat@murat.ws"
           git add *
           git commit -m "Add a new release of Ant Media Server Helm package"
-      - name: Push changes  # push the output folder to your repo
+      - name: Push changes  
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
