@@ -1,0 +1,39 @@
+on:
+  push:
+    branches: [ "add_helm_repo" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write 
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run the build package
+        run: bash package.sh
+        shell: bash
+      - name: Get version
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT       
+      - name: Commit files  # transfer the new html files back into the repository
+        run: |
+          echo ${{ secrets.SECRET_TOKEN }}
+          git config --global user.name  ${{ github.actor }}
+          git status
+          git add *
+          git commit -m "Add a new release of Ant Media Server Helm package"
+      - name: Push changes  # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ steps.version.outputs.version }}
+          prerelease: false
+          files: |
+            antmedia-${{ steps.version.outputs.version }}.tgz
