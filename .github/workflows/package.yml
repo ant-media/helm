@@ -23,7 +23,8 @@ jobs:
           git config --global user.name  ${{ github.actor }}
           git config --global user.email "murat@murat.ws"
           git add *
-          git commit -m "Add a new release of Ant Media Server Helm package"
+          git commit -m "${{ github.event.head_commit.message }}"
+          
       - name: Push changes  
         uses: ad-m/github-push-action@master
         with:
