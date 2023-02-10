@@ -3,14 +3,18 @@ kind: Ingress
 metadata:
   name: ant-media-server-origin
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "route"
-    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  {{- if .Values.provider.aws }}
+{{ toYaml .Values.annotations.aws | indent 4 }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.aws.ssl.arn }}
+{{ else }}
+{{ toYaml .Values.annotations.default | indent 4 }}
+  {{ end }}
 spec:
+  {{- if .Values.provider.aws }}
+  ingressClassName: alb
+  {{ else }}
   ingressClassName: nginx
+  {{ end }}
   rules:
   - host: {{ .Values.origin }}
     http:
