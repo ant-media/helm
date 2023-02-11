@@ -9,9 +9,9 @@ Ant Media Server installs the following
 - Ingress controller
 
 ## Prerequisites
-- Kubernetes >= 1.23 (You must have a Kubernetes cluster installed and be able to access it with kubectl.)
-- Helm v3 (https://helm.sh/docs/intro/install/)
-- cert-manager (No need if you are using "ams-k8s-ssl.sh" script)
+- **Kubernetes >= 1.23** (You must have a Kubernetes cluster installed and be able to access it with kubectl.)
+- **Helm v3** (https://helm.sh/docs/intro/install/)
+- **cert-manager** (No need if you are using "ams-k8s-ssl.sh" script)
 
 ## Installing the Chart
 Add the AMS repository to Helm:
@@ -34,10 +34,10 @@ kubectl create -n antmedia secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CE
 
 If you want to use your certificate created in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html), you must first install the [AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
 
-After the installation is complete, simply add the following parameters.
+After the installation is complete, simply add the following parameters to the helm command.
 
 ```sh
---set provider.aws=true --set aws.ssl.arn="arn:aws:acm:eu-west-1:1111111:certificate/a8c1-4b84-8126d6d4a21b
+--set provider.aws=true --set aws.ssl.arn="arn:aws:acm:eu-west-1:1111111:certificate/a8c1-4b84-8126d6d4a21b"
 ```
 #### Update DNS Records
 
