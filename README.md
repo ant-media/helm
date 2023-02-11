@@ -32,7 +32,7 @@ kubectl create -n antmedia secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CE
 ```
 #### AWS Certificate Manager
 
-If you want to use your certificate created in AWS Certificate Manager, you must first install the [AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
+If you want to use your certificate created in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html), you must first install the [AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
 
 After the installation is complete, simply add the following parameters.
 
