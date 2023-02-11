@@ -64,6 +64,13 @@ If everything went well, the output of the `kubectl get -n antmedia certificate`
 NAME                   READY   SECRET                 AGE
 antmedia-cert-origin   True    antmedia-cert-origin   21m
 ```
+#### Screenshots
+
+[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-login-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-login.png)
+[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard.png)
+[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing)
+
+
 ##### Manual installation
 
 [Click here](https://resources.antmedia.io/docs/install-ssl-on-kubernetes-using-lets-encrypt) for step-by-step installation.
