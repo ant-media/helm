@@ -65,9 +65,9 @@ NAME                   READY   SECRET                 AGE
 antmedia-cert-origin   True    antmedia-cert-origin   21m
 ```
 #### Screenshots
-<image align="center"><img width="300" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-login.png">
-<image align="center"><img width="300" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard.png">
-<image align="center"><img width="300" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-publishing.png">
+<image align="center"><img width="290" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-login.png">
+<image align="center"><img width="290" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard.png">
+<image align="center"><img width="290" height="150" src="https://antmedia.io/wp-content/uploads/2023/02/helm-publishing.png">
 
 ##### Manual installation
 
