@@ -22,12 +22,23 @@ helm install antmedia antmedia/antmedia --set origin={origin}.{example.com} --se
 ```
 
 ## Installing SSL 
-By default, a self-singed certificate comes in the Ant Media Server Kubernetes structure that you install with Helm. If you want, you can replace it with your own certificate as below or follow the steps below for Let's Encrypt.
+By default, a self-singed certificate comes in the Ant Media Server Kubernetes structure that you install with Helm. 
+
+#### Custom Certificate
+you can replace it with your own certificate as below or follow the steps below for Let's Encrypt.
 
 ```sh
 kubectl create -n antmedia secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE} 
 ```
+#### AWS Certificate Manager
 
+If you want to use your certificate created in AWS Certificate Manager, you must first install the [AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
+
+After the installation is complete, simply add the following parameters.
+
+```sh
+--set provider.aws=true --set aws.ssl.arn="arn:aws:acm:eu-west-1:1111111:certificate/a8c1-4b84-8126d6d4a21b
+```
 #### Update DNS Records
 
 Run `kubectl get ingress -n antmedia` command to get your Ingress IP address and then update your DNS according to the ingress IP address and hostnames.
