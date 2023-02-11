@@ -9,9 +9,9 @@ Ant Media Server installs the following
 - Ingress controller
 
 ## Prerequisites
-- Kubernetes >= 1.23
-- Helm v3
-- cert-manager
+- Kubernetes >= 1.23 (You must have a Kubernetes cluster installed and be able to access it with kubectl.)
+- Helm v3 (https://helm.sh/docs/intro/install/)
+- cert-manager (No need if you are using "ams-k8s-ssl.sh" script)
 
 ## Installing the Chart
 Add the AMS repository to Helm:
