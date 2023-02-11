@@ -3,7 +3,7 @@ on:
     branches: [ "add_helm_repo" ]
     paths-ignore:
       - '**/README.md'
-      - '**/.github/'
+      - '**/.github/**'
   workflow_dispatch:
 
 permissions:
