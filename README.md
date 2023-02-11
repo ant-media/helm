@@ -67,8 +67,8 @@ antmedia-cert-origin   True    antmedia-cert-origin   21m
 #### Screenshots
 
 [![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-login-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-login.png)
-[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard.png)
-[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing-300x196.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing)
+[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard-300x150.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-dashboard.png)
+[![Image](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing-300x151.png)](https://antmedia.io/wp-content/uploads/2023/02/helm-publishing)
 
 
 ##### Manual installation
