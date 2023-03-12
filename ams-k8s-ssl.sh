@@ -10,6 +10,26 @@ get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath=
 origin_ssl="kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 edge_ssl="kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 
+check() {
+  OUT=$?
+  if [ $OUT -ne 0 ]; then
+    echo "There is a problem with installing the cert-manager. Please check the output.log file to debug it."
+    exit $OUT
+  fi
+}
+
+cert_manager() {
+  log_file="output.log"
+  helm repo add jetstack https://charts.jetstack.io &> $log_file
+  check
+  helm repo update &> $log_file
+  check
+  helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> $log_file
+  check
+  kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml &> $log_file
+  check
+}
+
 declare -A hostname
 check_edge=`kubectl get -n $namespace ingress ant-media-server-edge 2> /dev/null  | wc -l`
 
@@ -38,10 +58,7 @@ for hostnames in "${hostname[@]}"; do
 done
 
 # Install cert-manager
-helm repo add jetstack https://charts.jetstack.io &> /dev/null
-helm repo update &> /dev/null
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> /dev/null
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml &> /dev/null
+cert_manager
 
 # Create letsencrypt-production ClusterIssuer
 kubectl create -f - &> /dev/null <<EOF 
