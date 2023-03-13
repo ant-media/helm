@@ -1,3 +1,4 @@
+![workflow](https://github.com/ant-media/helm/actions/workflows/package.yml/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ant-media/helm)
 
 # Ant Media Server 
