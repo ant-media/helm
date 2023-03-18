@@ -33,7 +33,8 @@ spec:
               - key: app
                 operator: In
                 values:
-                - ant-media
+                - ant-media-origin
+                - ant-media-edge
             topologyKey: "kubernetes.io/hostname"
       hostNetwork: {{ .Values.hostNetwork }}
       {{end}}
