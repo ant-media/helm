@@ -86,7 +86,7 @@ if [ "$check_edge" != "0" ]; then
     echo "Self-Signed certificates have been deleted."
 else
 	kubectl delete -n $namespace secret antmedia-cert-origin --ignore-not-found=true
-	echo "Self-Signed certificate have been deleted."
+	echo "The self-Signed certificate has been deleted."
 fi
 
 # Update annotates for Let's Encrypt
