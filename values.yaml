@@ -127,20 +127,13 @@ annotations:
   }
 
 
-
 affinityNode:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: nodepool
-            operator: In
-            
-
-    
-
-
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nodepool
+          operator: In
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
