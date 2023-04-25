@@ -117,6 +117,7 @@ helm delete antmedia -n antmedia
 | `MongoDBNodeSelector`                               | Node Affinity for MongoDB deployment.                                                         | `{}`                                                                               |
 | `EdgeNodeSelector`                               | Node Affinity for AMS Edge deployment.                                                         | `{}`                                                                               |
 | `OriginNodeSelector`                               | Node Affinity for Edge Origin deployment.                                                         | `{}`                                                                               |
+| `kafkaURL`                               | The Kafka URL address to collect data.                                                         | `{}`                                                                               |
 
 
 
