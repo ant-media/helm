@@ -48,5 +48,4 @@ spec:
       - name: ant-media-server
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}   
-        args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}"]
-
+        args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}", "-k", "{{ .Values.kafkaURL }}"]
