@@ -95,7 +95,7 @@ origin: {}
 edge: {}
 mongoDB: mongo
 licenseKey:
-
+kafkaURL: {}
 hostNetwork: true
 
 image:
