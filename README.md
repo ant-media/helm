@@ -114,9 +114,9 @@ helm delete antmedia -n antmedia
 | `autoscalingEdge.targetCPUUtilizationPercentage`                                 | Target CPU utilization percentage for autoscaler for Edge                         | `60`                                                                                |
 | `autoscalingEdge.minReplicas`                          | Minimum number of deployment replicas for the compute container.     | `1`                                                                               |
 | `autoscalingEdge.maxReplicas`                               | Maximum number of deployment replicas for the compute container.                                                         | `10`                                                                               |
-| `MongoDBNodeSelector`                               | Node Affinity for MongoDB deployment.                                                         | `{}`                                                                               |
-| `EdgeNodeSelector`                               | Node Affinity for AMS Edge deployment.                                                         | `{}`                                                                               |
-| `OriginNodeSelector`                               | Node Affinity for Edge Origin deployment.                                                         | `{}`                                                                               |
+| `MongoDBNodeSelector`                               | Node Affinity for MongoDB deployment (Default key: nodepool).                                                         | `{}`                                                                               |
+| `EdgeNodeSelector`                               | Node Affinity for AMS Edge deployment (Default key: nodepool).                                                         | `{}`                                                                               |
+| `OriginNodeSelector`                               | Node Affinity for Edge Origin deployment (Default key: nodepool).                                                         | `{}`                                                                               |
 | `kafkaURL`                               | The Kafka URL address to collect data.                                                         | `{}`                                                                               |
 
 
