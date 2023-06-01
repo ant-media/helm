@@ -49,3 +49,8 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}   
         args: ["-g", "true", "-s", "true", "-r", "true", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}", "-k", "{{ .Values.kafkaURL }}"]
+        {{- if .Values.OriginCpu }}
+        resources:
+        {{ "requests:" | indent 2 }}
+        {{ "cpu:" | indent 4 }} {{ .Values.OriginCpu }}
+        {{- end }}
