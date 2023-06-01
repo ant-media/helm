@@ -118,6 +118,8 @@ helm delete antmedia -n antmedia
 | `EdgeNodeSelector`                               | Node Affinity for AMS Edge deployment (Default key: nodepool).                                                         | `{}`                                                                               |
 | `OriginNodeSelector`                               | Node Affinity for Edge Origin deployment (Default key: nodepool).                                                         | `{}`                                                                               |
 | `kafkaURL`                               | The Kafka URL address to collect data.                                                         | `{}`                                                                               |
+| `OriginCpu`                               | Set the CPU limit for Origin Pods.                                                         | `{}`                                                                               |
+| `EdgeCpu`                               | Set the CPU limit for Edge Pods.                                                         | `{}`                                                                               |
 
 
 
