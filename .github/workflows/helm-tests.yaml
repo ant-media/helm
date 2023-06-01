@@ -3,10 +3,10 @@ name: Helm Chart Test
 on:
   push:
     branches:
-      - master  
+      - add_helm_repo  
   pull_request:
     branches:
-      - master  
+      - add_helm_repo
 
 jobs:
   test:
