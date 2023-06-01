@@ -9,7 +9,7 @@ on:
       - add_helm_repo
 
 jobs:
-  test:
+  repository-tests:
     runs-on: ubuntu-latest  
 
     steps:
