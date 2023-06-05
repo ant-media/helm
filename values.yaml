@@ -89,7 +89,7 @@ hostNetwork: true
 
 image:
   repository: antmedia/enterprise
-  tag: 2.5.3
+  tag: 2.6.1
   pullPolicy: IfNotPresent
 
 provider:
