@@ -136,10 +136,8 @@ affinityNode:
           - key: nodepool
             operator: In
             
-
-    
-
-
+OriginCpu: {}
+EdgeCpu: {}   
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
