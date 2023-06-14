@@ -56,6 +56,17 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+resources: 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  requests:
+    cpu: 4000m
+  #   memory: 128Mi
 
 autoscalingEdge:
   enabled: true
@@ -84,12 +95,12 @@ origin: {}
 edge: {}
 mongoDB: mongo
 licenseKey:
-kafkaURL: {}
+
 hostNetwork: true
 
 image:
   repository: antmedia/enterprise
-  tag: 2.5.3
+  tag: 2.6.1
   pullPolicy: IfNotPresent
 
 provider:
@@ -101,7 +112,6 @@ aws.ssl.arn: {}
 annotations:
   default: {
     nginx.ingress.kubernetes.io/affinity: "cookie",
-    nginx.ingress.kubernetes.io/proxy-body-size: "0m",
     nginx.ingress.kubernetes.io/session-cookie-name: "route",
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800",
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800",
@@ -116,18 +126,20 @@ annotations:
   }
 
 
+
 affinityNode:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: nodepool
-          operator: In
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodepool
+            operator: In
+            
+
+    
 
 
-
-OriginCpu: {}
-EdgeCpu: {}
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
