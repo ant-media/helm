@@ -138,7 +138,15 @@ affinityNode:
             
 OriginCpu: {}
 EdgeCpu: {}
-kafkaURL: {}   
+kafkaURL: {}
+
+UseGlobalIP: true
+UsePublicIP: true
+ReplaceCandidateAddress: true
+
+TurnStunServerURL: {}
+TurnUsername: {}
+TurnPassword: {}
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
