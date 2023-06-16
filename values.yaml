@@ -141,7 +141,7 @@ EdgeCpu: {}
 kafkaURL: {}
 
 UseGlobalIP: true
-UsePublicIP: true
+UseServerName: true
 ReplaceCandidateAddress: true
 
 TurnStunServerURL: {}
