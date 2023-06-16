@@ -120,6 +120,9 @@ helm delete antmedia -n antmedia
 | `kafkaURL`                               | The Kafka URL address to collect data.                                                         | `{}`                                                                               |
 | `OriginCpu`                               | Set the CPU limit for Origin Pods.                                                         | `{}`                                                                               |
 | `EdgeCpu`                               | Set the CPU limit for Edge Pods.                                                         | `{}`                                                                               |
+| `UseGlobalIP`                               | Use global(Public) IP in network communication.                                                         | `true`                                                                               |
+| `UseServerName`                               | Use Public IP as server name.                                                         | `true`                                                                               |
+| `ReplaceCandidateAddress`                               | Replace candidate address with server name.                                                         | `true`                                                                               |
 
 
 
