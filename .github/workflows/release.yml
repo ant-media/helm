@@ -1,8 +1,8 @@
-name: Helm Chart Test
+name: Ant Media Server Release
 
 on:
   push:
-    branches: [ "add_helm_repo" ]
+    branches: [ "master" ]
     paths-ignore:
       - '**/README.md'
       - '**/.github/**'
@@ -14,43 +14,11 @@ permissions:
   pull-requests: write 
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run the build package
-        run: bash package.sh
-        shell: bash
-      - name: Get version
-        id: version
-        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT       
-      - name: Commit files  
-        run: |
-          git config --global user.name  ${{ github.actor }}
-          git config --global user.email "murat@murat.ws"
-          git add *
-          git commit -m "${{ github.event.head_commit.message }}"
-          
-      - name: Push changes  
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          if: steps.version.outputs.released == 'true
-          automatic_release_tag: ${{ steps.version.outputs.version }}
-          prerelease: false
-          files: |
-            antmedia-${{ steps.version.outputs.version }}.tgz
-
-  test:
-    needs: build
+  test_repo:
     runs-on: ubuntu-latest  
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Set up Minikube
         run: |
@@ -78,6 +46,7 @@ jobs:
         run: |
           helm repo add antmedia https://ant-media.github.io/helm
           helm repo update
+          helm search repo
           helm install antmedia antmedia/antmedia --set origin=origin.antmedia.cloud --set edge=edge.antmedia.cloud 
 
       - name: Uninstall Helm release
@@ -86,3 +55,20 @@ jobs:
 
       - name: Stop Minikube
         run: minikube stop
+  release:
+      needs: test_repo
+      runs-on: ubuntu-latest  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Get version
+          id: version
+          run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT       
+        - uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            if: steps.version.outputs.released == 'true
+            automatic_release_tag: ${{ steps.version.outputs.version }}
+            prerelease: false
+            files: |
+              antmedia-${{ steps.version.outputs.version }}.tgz
