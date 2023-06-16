@@ -137,7 +137,8 @@ affinityNode:
             operator: In
             
 OriginCpu: {}
-EdgeCpu: {}   
+EdgeCpu: {}
+kafkaURL: {}   
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
