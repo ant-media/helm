@@ -3,13 +3,13 @@ entries:
   antmedia:
   - apiVersion: v2
     appVersion: 2.6.1
-    created: "2023-06-14T13:22:26.543763Z"
+    created: "2023-06-16T14:27:12.050167313Z"
     dependencies:
     - name: ingress-nginx
       repository: https://kubernetes.github.io/ingress-nginx
       version: <= 4.4.0
     description: A Helm chart for Kubernetes
-    digest: 1097510f313da9b91402ac2b20782eadcf98f49509792c247959aa3e6dc010bd
+    digest: 66ebc5eee0ecd35fbcba68dd779990aeda71947a1045275085e85e8bfd3b4e33
     name: antmedia
     type: application
     urls:
@@ -17,7 +17,7 @@ entries:
     version: 2.6.1
   - apiVersion: v2
     appVersion: 2.5.3
-    created: "2023-06-14T13:22:26.536812053Z"
+    created: "2023-06-16T14:27:12.044558964Z"
     dependencies:
     - name: ingress-nginx
       repository: https://kubernetes.github.io/ingress-nginx
@@ -56,7 +56,7 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.5.1
-    created: "2023-06-14T13:22:26.547512726Z"
+    created: "2023-06-16T14:27:12.053475601Z"
     description: Ingress controller for Kubernetes using NGINX as a reverse proxy
       and load balancer
     digest: 5c5ffcd4a19377f9e2eeb40fd8c0a2a7a9f851db74453247c357c83e1775c330
@@ -119,4 +119,4 @@ entries:
     urls:
     - https://ant-media.github.io/helm/charts/metrics-server-3.8.3.tgz
     version: 3.8.3
-generated: "2023-06-14T13:22:26.530993414Z"
+generated: "2023-06-16T14:27:12.037114266Z"

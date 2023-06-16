@@ -1,4 +1,4 @@
-![workflow](https://github.com/ant-media/helm/actions/workflows/package.yml/badge.svg)
+![workflow](https://github.com/ant-media/helm/actions/workflows/release.yml/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ant-media/helm)
   <a href="https://hub.docker.com/repository/docker/antmedia/enterprise" alt="Docker pulls">
     <img src="https://img.shields.io/docker/pulls/antmedia/enterprise" /></a>
