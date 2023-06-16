@@ -2,7 +2,7 @@ name: Ant Media Server Release
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "add_helm_repo" ]
     paths-ignore:
       - '**/README.md'
       - '**/.github/**'
