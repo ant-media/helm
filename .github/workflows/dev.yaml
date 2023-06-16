@@ -1,0 +1,84 @@
+name: Development Test
+
+on:
+  push:
+    branches-ignore:
+      - add_helm_repo
+    paths-ignore:
+      - '**/README.md'
+      - '**/.github/**'
+      - '**/package.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Run the build package
+        run: bash package.sh
+        shell: bash
+      - name: Get version
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+      - name: Commit files  
+        run: |
+          git config --global user.name  ${{ github.actor }}
+          git config --global user.email "murat@murat.ws"
+          git add *
+          git commit -m "${{ github.event.head_commit.message }}"    
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+  test_local:
+    needs: build
+    runs-on: ubuntu-latest  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Get version
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT  
+      - name: Set up Minikube
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y conntrack
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+      - name: Start Minikube
+        run: minikube start --driver=docker
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+      - name: Install dependencies
+        run: |
+          helm dependency update .  
+
+      - name: Lint Helm chart
+        run: |
+          helm lint .  
+
+      - name: Deploy Helm chart to Minikube
+        run: |
+          ls -alh
+          helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --set edge=edge.antmedia.cloud 
+
+      - name: Uninstall Helm release
+        run: |
+          helm uninstall antmedia  
+
+      - name: Stop Minikube
+        run: minikube stop
