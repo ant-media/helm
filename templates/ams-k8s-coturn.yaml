@@ -44,7 +44,7 @@ spec:
           args:
           - "-a" 
           - "-f"
-          - "--user=test:test"
+          - "--user={{ .Values.TurnUsername }}:{{ .Values.TurnPassword }}"
           - "-p"
           - "3478"
           - "-v" 
