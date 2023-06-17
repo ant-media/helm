@@ -42,11 +42,14 @@ spec:
               hostPort: 3478
               protocol: TCP
           args:
-          #   - --stun-only
-            - -v
-            - --user "{username}:{password}"
-            - --external-ip="$(detect-external-ip)/$MY_POD_IP"
-            - --realm="$(detect-external-ip)"
+          - "-a" 
+          - "-f"
+          - "--user=test:test"
+          - "-p"
+          - "3478"
+          - "-v" 
+          - "--external-ip=$(detect-external-ip)/$MY_POD_IP"
+          - "--realm=$(detect-external-ip)"
 
 --- 
 
