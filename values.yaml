@@ -144,9 +144,9 @@ UseGlobalIP: true
 UseServerName: true
 ReplaceCandidateAddress: true
 
-TurnStunServerURL: {}
-TurnUsername: {}
-TurnPassword: {}
+TurnStunServerURL: 
+TurnUsername: 
+TurnPassword: 
 
 ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress

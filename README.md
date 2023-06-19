@@ -123,6 +123,9 @@ helm delete antmedia -n antmedia
 | `UseGlobalIP`                               | Use global(Public) IP in network communication.                                                         | `true`                                                                               |
 | `UseServerName`                               | Use Public IP as server name.                                                         | `true`                                                                               |
 | `ReplaceCandidateAddress`                               | Replace candidate address with server name.                                                         | `true`                                                                               |
+| `TurnStunServerURL`                               | TURN/STUN Server URL for the server side. It should start with "turn:" or "stun:".                                                        | `{}`                                                                               |
+| `TurnUsername`                               | TURN Server Usermame.                                                         | `{}`                                                                               |
+| `TurnPassword`                               | TURN Server Password.                                                        | `{}`                                                                               |
 
 
 
