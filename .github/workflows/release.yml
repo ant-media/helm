@@ -28,7 +28,10 @@ jobs:
           sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
       - name: Start Minikube
-        run: minikube start --driver=docker
+        run: |
+         sudo usermod -aG docker $USER
+         newgrp docker
+         minikube start --driver=docker
 
       - name: Install Helm
         run: |

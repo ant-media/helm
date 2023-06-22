@@ -58,8 +58,9 @@ jobs:
 
       - name: Start Minikube
         run: |
-          sudo usermod -aG docker $USER && newgrp docker
-          minikube start --driver=docker
+         sudo usermod -aG docker $USER
+         newgrp docker
+         minikube start --driver=docker
 
       - name: Install Helm
         run: |
