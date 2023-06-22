@@ -42,6 +42,6 @@ spec:
           emptyDir: {}
         - name: grafana-datasources
           configMap:
-            name: grafana-datasources
+            name: grafana-configmap
 
 
