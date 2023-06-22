@@ -40,7 +40,7 @@ jobs:
           branch: ${{ github.ref }}
   test_local:
     needs: build
-    runs-on: ubuntu-latest  
+    runs-on: self-hosted 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
