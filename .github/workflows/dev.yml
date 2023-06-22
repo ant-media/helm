@@ -74,11 +74,36 @@ jobs:
       - name: Deploy Helm chart to Minikube
         run: |
           ls -alh
-          helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --set edge=edge.antmedia.cloud 
-
+          helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --namespace antmedia --create-namespace
+      - name: Wait for containers to be ready
+        run: |
+          while true; do
+            STATUS=$(kubectl get pods -n antmedia -o jsonpath='{.items[0].status.containerStatuses[0].ready}')
+            if [ "$STATUS" == "true" ]; then
+              break
+            fi
+            sleep 5
+          done
+      - name: Get Minikube IP
+        id: minikube_ip
+        run: echo "::set-output name=ip::$(minikube ip)"
+      - name: Test pod using curl
+        id: curl_result
+        run: |
+          sleep 30
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" http://${{ steps.minikube_ip.outputs.ip }}:5080)
+          echo "::set-output name=status_code::$status_code"
+      - name: Check curl result
+        run: |
+          if [[ "${{ steps.curl_result.outputs.status_code }}" -eq 200 ]]; then
+            echo "Ant Media Server is running successfully."
+          else
+            echo "Ant Media Server is not accessible. HTTP status code: ${{ steps.curl_result.outputs.status_code }}"
+            exit 1
+          fi
       - name: Uninstall Helm release
         run: |
-          helm uninstall antmedia  
+          helm uninstall antmedia -n antmedia
 
       - name: Stop Minikube
         run: minikube stop
