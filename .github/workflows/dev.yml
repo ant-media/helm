@@ -41,7 +41,7 @@ jobs:
           git commit -m "${{ steps.commit_message.outputs.commit_message || 'Auto-commit changes' }}"      
       - name: Push changes
         run: |
-          git remote set-url origin https://github.com/muratugureminoglu/helm.git
+          git remote set-url origin https://github.com/ant-media/helm.git
           git config --global user.name  ${{ github.actor }}
           git config --global user.email "murat@murat.ws"
           git push origin HEAD:${GITHUB_HEAD_REF}
