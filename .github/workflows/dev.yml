@@ -1,13 +1,14 @@
 name: Development Test
 
 on:
-  push:
-    branches-ignore:
-      - add_helm_repo
+  pull_request:
     paths-ignore:
       - '**/README.md'
       - '**/.github/**'
       - '**/package.sh'
+  check_suite:
+    types:
+      - requested
   workflow_dispatch:
 
 permissions:
@@ -27,17 +28,23 @@ jobs:
       - name: Get version
         id: version
         run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+      - name: Get commit message
+        id: commit_message
+        run: |
+          commit_message=$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})
+          echo "::set-output name=commit_message::$commit_message"
       - name: Commit files  
         run: |
           git config --global user.name  ${{ github.actor }}
           git config --global user.email "murat@murat.ws"
           git add *
-          git commit -m "${{ github.event.head_commit.message }}"    
+          git commit -m "${{ steps.commit_message.outputs.commit_message || 'Auto-commit changes' }}"      
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+        run: |
+          git remote set-url origin https://github.com/muratugureminoglu/helm.git
+          git config --global user.name  ${{ github.actor }}
+          git config --global user.email "murat@murat.ws"
+          git push origin HEAD:${GITHUB_HEAD_REF}
   test_local:
     needs: build
     runs-on: self-hosted 
