@@ -82,9 +82,6 @@ jobs:
       - name: Lint Helm chart
         run: |
           helm lint .
-      - name: Uninstall if the cluster is running
-        run: |
-          helm uninstall antmedia -n antmedia
 
       - name: Deploy Helm chart to Minikube
         run: |
