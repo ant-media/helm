@@ -63,11 +63,12 @@ jobs:
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
           sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
-      - name: Start Minikube
+      - name: Stop/Start Minikube
         run: |
          sudo usermod -aG docker $USER
          newgrp docker
          sudo systemctl restart docker
+         minikube stop
          minikube start --driver=docker
 
       - name: Install Helm
@@ -80,7 +81,7 @@ jobs:
 
       - name: Lint Helm chart
         run: |
-          helm lint .  
+          helm lint .
 
       - name: Deploy Helm chart to Minikube
         run: |
@@ -112,11 +113,25 @@ jobs:
             echo "Ant Media Server is not accessible. HTTP status code: ${{ steps.curl_result.outputs.status_code }}"
             exit 1
           fi
-      - name: Uninstall Helm release
+      - name: Download Sample MP4 Video
         run: |
-          helm uninstall antmedia -n antmedia
-    
+          wget https://raw.githubusercontent.com/ant-media/Ant-Media-Server/master/src/test/resources/sample_MP4_480.mp4
+          
+      - name: Install FFmpeg and Check RTMP Stream
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -re -i sample_MP4_480.mp4 -t 10 -c copy -f flv rtmp://127.0.0.1/WebRTCAppEE/stream1
+          
+#      - name: Check Playback
+#        run: |
+#          ffplay "http://127.0.0.1/WebRTCAppEE/streams/stream1.m3u8"
+      - name: Uninstall Helm release
+        if: ${{ always() }}
+        run: helm uninstall antmedia -n antmedia
       - name: Stop Minikube
+        if: ${{ always() }}
         run: minikube stop
-      - name: Stop docker 
+      - name: Stop docker
+        if: ${{ always() }}
         run: sudo systemctl stop docker
