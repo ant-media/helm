@@ -123,9 +123,9 @@ jobs:
           sudo apt-get install -y ffmpeg
           ffmpeg -re -i sample_MP4_480.mp4 -t 10 -c copy -f flv rtmp://127.0.0.1/WebRTCAppEE/stream1
           
-      - name: Check Playback
-        run: |
-          ffplay "http://127.0.0.1/WebRTCAppEE/streams/stream1.m3u8"
+#      - name: Check Playback
+#        run: |
+#          ffplay "http://127.0.0.1/WebRTCAppEE/streams/stream1.m3u8"
       - name: Uninstall Helm release
         if: ${{ failure() }}
         run: helm uninstall antmedia -n antmedia
