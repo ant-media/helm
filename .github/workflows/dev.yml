@@ -127,11 +127,11 @@ jobs:
 #        run: |
 #          ffplay "http://127.0.0.1/WebRTCAppEE/streams/stream1.m3u8"
       - name: Uninstall Helm release
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: helm uninstall antmedia -n antmedia
       - name: Stop Minikube
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: minikube stop
       - name: Stop docker
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: sudo systemctl stop docker
