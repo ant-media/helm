@@ -112,6 +112,7 @@ aws.ssl.arn: {}
 annotations:
   default: {
     nginx.ingress.kubernetes.io/affinity: "cookie",
+    nginx.ingress.kubernetes.io/proxy-body-size: "0m",
     nginx.ingress.kubernetes.io/session-cookie-name: "route",
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800",
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800",
