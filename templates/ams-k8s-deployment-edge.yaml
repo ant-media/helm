@@ -51,6 +51,12 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}        
         args: ["-g", "{{ .Values.UseGlobalIP }}", "-s", "{{ .Values.UseServerName }}", "-r", "{{ .Values.ReplaceCandidateAddress }}", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}", "-a", "{{ .Values.TurnStunServerURL }}", "-n", "{{ .Values.TurnUsername }}", "-w", "{{ .Values.TurnPassword }}", "-k", "{{ .Values.kafkaURL }}"]
         {{- if .Values.EdgeCpu }}
+        livenessProbe:
+          httpGet:
+            path: / 
+            port: 5080
+          initialDelaySeconds: 30
+          periodSeconds: 10
         resources:
         {{ "requests:" | indent 2 }}
         {{ "cpu:" | indent 4 }} {{ .Values.EdgeCpu }}
