@@ -90,7 +90,19 @@ antmedia-cert-origin   True    antmedia-cert-origin   21m
 [Click here](https://resources.antmedia.io/docs/install-ssl-on-kubernetes-using-lets-encrypt) for step-by-step installation.
 
 ## Upgrade
-The old installation must be uninstalled completely before installing the new version.
+
+As an example, we are updating to version 2.6.4. Don't forget to specify the version you want to install.
+
+```
+kubectl patch deployment ant-media-server-origin -p '{"spec":{"template":{"spec":{"containers":[{"name":"ant-media-server","image":"antmedia/enterprise:2.6.4"}]}}}}' -n antmedia
+kubectl patch deployment ant-media-server-edge -p '{"spec":{"template":{"spec":{"containers":[{"name":"ant-media-server","image":"antmedia/enterprise:2.6.4"}]}}}}' -n antmedia
+```
+Delete the Ant Media Server pods and ensure they are started with the new image.
+
+```
+kubectl delete pods -l app=ant-media-origin -n antmedia
+kubectl delete pods -l app=ant-media-edge -n antmedia
+```
 
 ## Uninstalling the Chart
 ```sh
