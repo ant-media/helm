@@ -22,16 +22,22 @@ check() {
   fi
 }
 
+# check if cert-manager is installed
 cert_manager() {
   log_file="output.log"
-  helm repo add jetstack https://charts.jetstack.io &> $log_file
-  check
-  helm repo update &> $log_file
-  check
-  helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> $log_file
-  check
-  kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml &> $log_file
-  check
+  certbot_manager_installed=$(helm list -n cert-manager --short | grep certbot-manager)
+
+  if [ -n "$certbot_manager_installed" ]; then
+    # If certbot-manager is installed
+    helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.9.1 --set installCRDs=true &> $log_file
+    check
+  else
+    # If certbot-manager is not installed
+    helm repo add jetstack https://charts.jetstack.io &> $log_file
+    helm repo update &> $log_file
+    helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.9.1 --set installCRDs=true &> $log_file
+    check
+  fi
 }
 
 declare -A hostname
