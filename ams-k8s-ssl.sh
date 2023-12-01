@@ -5,8 +5,12 @@
 #
 
 namespace="antmedia"
-ingress_controller_name="antmedia-ingress-nginx-controller"
-get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
+#ingress_controller_name="antmedia-ingress-nginx-controller"
+#get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
+origin_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-origin -o json | jq -r '.status.loadBalancer.ingress[0].ip'`
+origin_hostname=`kubectl get ingress -n antmedia ant-media-server-origin -o json | jq -r '.spec.rules[0].host'`
+edge_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-edge -o json | jq -r '.status.loadBalancer.ingress[0].ip'`
+edge_hostname=`kubectl get ingress -n antmedia ant-media-server-edge -o json | jq -r '.spec.rules[0].host'`
 origin_ssl="kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 edge_ssl="kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 
@@ -47,15 +51,13 @@ if ! [ -x "$(which dig)" ]; then
 	sudo apt-get install bind9-dnsutils -y -qq
 fi
 
-for hostnames in "${hostname[@]}"; do
-	if [ `dig @8.8.8.8 $hostnames +noall +answer |wc -l` == "0" ]; then
-		echo "Please make sure your DNS record is correct then run the script again later."
-		exit 1
-	elif [ `dig @8.8.8.8 $hostnames +short` != "$get_ingress" ]; then
-		echo "Please make sure your DNS record is correct then run the script again later."
-		exit 1
-	fi
-done
+if   [ `dig @8.8.8.8 $origin_hostname +short` != "$origin_ingress_ip" ]; then
+        echo "Please make sure your DNS record is correct then run the script again later."
+        exit 1
+elif [ `dig @8.8.8.8 $edge_hostname +short` != "$edge_ingress_ip" ]; then
+        echo "Please make sure your DNS record is correct then run the script again later."
+        exit 1
+fi
 
 # Install cert-manager
 cert_manager
