@@ -1,4 +1,4 @@
-name: Development Test
+name: Docker Image Build/Push and Development Test
 
 on:
   pull_request:
