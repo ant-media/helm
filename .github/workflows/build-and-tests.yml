@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       DOCKER_URL: antmedia/enterprise
     steps:
