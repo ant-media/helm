@@ -106,11 +106,11 @@ jobs:
 
       - name: Stop/Start Minikube
         run: |
+         sudo groupadd docker
          sudo usermod -aG docker $USER
-         echo $USER
          newgrp docker
          sudo systemctl restart docker
-         #minikube stop
+         minikube stop
          minikube start --driver=docker
 
       - name: Install Helm
