@@ -107,6 +107,7 @@ jobs:
       - name: Stop/Start Minikube
         run: |
          sudo usermod -aG docker $USER
+         echo $USER
          newgrp docker
          sudo systemctl restart docker
          #minikube stop
