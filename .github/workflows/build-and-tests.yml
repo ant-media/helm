@@ -110,8 +110,8 @@ jobs:
          newgrp docker
          sudo chmod 660 /var/run/docker.sock
          sudo systemctl restart docker
-         minikube stop
-         minikube start --driver=docker
+         #minikube stop
+         #minikube start --driver=docker
 
       - name: Install Helm
         run: |
