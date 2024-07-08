@@ -109,7 +109,7 @@ jobs:
          sudo usermod -aG docker $USER
          newgrp docker
          sudo chmod 660 /var/run/docker.sock
-         sudo systemctl restart docker
+         #sudo systemctl restart docker
          #minikube stop
          #minikube start --driver=docker
 
@@ -119,16 +119,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo helm dependency update .  
+          helm dependency update .  
 
       - name: Lint Helm chart
         run: |
-          sudo helm lint .
+          helm lint .
 
       - name: Deploy Helm chart to Minikube
         run: |
           ls -alh
-          sudo helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --namespace antmedia --create-namespace
+          helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --namespace antmedia --create-namespace
       - name: Wait for containers to be ready
         run: |
           while true; do
