@@ -22,7 +22,7 @@ jobs:
       DOCKER_URL: antmedia/enterprise
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download latest.zip
         run: wget --quiet ${{ secrets.LATEST_URL }}
