@@ -119,16 +119,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          helm dependency update .  
+          sudo helm dependency update .  
 
       - name: Lint Helm chart
         run: |
-          helm lint .
+          sudo helm lint .
 
       - name: Deploy Helm chart to Minikube
         run: |
           ls -alh
-          helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --namespace antmedia --create-namespace
+          sudo helm install antmedia antmedia-${{ steps.version.outputs.version }}.tgz --set origin=origin.antmedia.cloud --namespace antmedia --create-namespace
       - name: Wait for containers to be ready
         run: |
           while true; do
