@@ -290,12 +290,12 @@ jobs:
           https://api.github.com/repos/$REPO/actions/runners/$RUNNER_ID
         
         echo "Runner deleted successfully."
-    - name: Uninstall Helm release
+    - name: Install Dependencies
       if: ${{ always() }}
-      run: helm uninstall antmedia -n antmedia
-    - name: Stop Minikube
-      if: ${{ always() }}
-      run: minikube stop
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip python3-dev libffi-dev libssl-dev
+        sudo pip3 install python-openstackclient
     - name: Delete CI Instance
       if: ${{ always() }}
       run: |
