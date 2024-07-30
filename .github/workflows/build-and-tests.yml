@@ -189,7 +189,7 @@ jobs:
           git push origin HEAD:${GITHUB_HEAD_REF}
 
   local_tests:
-    needs: setup-runner
+    needs: [setup-runner, docker-build-and-push, prepare-and-push]
     runs-on: self-hosted 
     steps:
       - name: Checkout code
