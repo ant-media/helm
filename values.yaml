@@ -116,7 +116,14 @@ annotations:
     nginx.ingress.kubernetes.io/session-cookie-name: "route",
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800",
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800",
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/healthcheck-interval: "5s"
+    nginx.ingress.kubernetes.io/healthcheck-path: /
+    nginx.ingress.kubernetes.io/healthcheck-port: "5080"
+    nginx.ingress.kubernetes.io/healthcheck-timeout: "3s"
+    nginx.ingress.kubernetes.io/proxy-next-upstream: error timeout http_502
+    nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "3"
+    nginx.ingress.kubernetes.io/ssl-protocols: TLSv1.2 TLSv1.3
   }
   aws: {
     alb.ingress.kubernetes.io/scheme: internet-facing,
