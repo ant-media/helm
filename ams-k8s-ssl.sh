@@ -7,10 +7,10 @@
 namespace="antmedia"
 #ingress_controller_name="antmedia-ingress-nginx-controller"
 #get_ingress=`kubectl get -n $namespace svc $ingress_controller_name -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
-origin_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-origin -o json | jq -r '.status.loadBalancer.ingress[0].ip'`
-origin_hostname=`kubectl get ingress -n antmedia ant-media-server-origin -o json | jq -r '.spec.rules[0].host'`
-edge_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-edge -o json | jq -r '.status.loadBalancer.ingress[0].ip'`
-edge_hostname=`kubectl get ingress -n antmedia ant-media-server-edge -o json | jq -r '.spec.rules[0].host'`
+origin_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-origin -o json 2> /dev/null | jq -r '.status.loadBalancer.ingress[0].ip'`
+origin_hostname=`kubectl get ingress -n antmedia ant-media-server-origin -o json 2> /dev/null  | jq -r '.spec.rules[0].host'`
+edge_ingress_ip=`kubectl get ingress -n antmedia ant-media-server-edge -o json 2> /dev/null | jq -r '.status.loadBalancer.ingress[0].ip'`
+edge_hostname=`kubectl get ingress -n antmedia ant-media-server-edge -o json 2> /dev/null  | jq -r '.spec.rules[0].host'`
 origin_ssl="kubectl get certificate antmedia-cert-origin -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 edge_ssl="kubectl get certificate antmedia-cert-edge -o jsonpath='{.status.conditions[].status}' -n $namespace --ignore-not-found=true"
 
@@ -25,7 +25,7 @@ check() {
 # check if cert-manager is installed
 cert_manager() {
   log_file="output.log"
-  certbot_manager_installed=$(helm list -n cert-manager --short | grep certbot-manager)
+  certbot_manager_installed=$(helm list -n cert-manager --short | grep cert-manager)
 
   if [ -n "$certbot_manager_installed" ]; then
     # If certbot-manager is installed
@@ -60,9 +60,13 @@ fi
 if   [ `dig @8.8.8.8 $origin_hostname +short` != "$origin_ingress_ip" ]; then
         echo "Please make sure your DNS record is correct then run the script again later."
         exit 1
-elif [ `dig @8.8.8.8 $edge_hostname +short` != "$edge_ingress_ip" ]; then
-        echo "Please make sure your DNS record is correct then run the script again later."
-        exit 1
+fi
+
+if [ "$check_edge" != "0" ]; then
+	if [ `dig @8.8.8.8 $edge_hostname +short` != "$edge_ingress_ip" ]; then
+		echo "Please make sure your DNS record is correct then run the script again later."
+		exit 1
+	fi
 fi
 
 # Install cert-manager
@@ -100,19 +104,40 @@ fi
 # Update annotates for Let's Encrypt
 kubectl annotate -n $namespace ingress cert-manager.io/cluster-issuer=letsencrypt-production --all 
 
-# Wait for verifying.
-sleep 10
+attempt=1
+max_attempts=5
 
-if [ "$check_edge" != "0" ]; then
-    if [ $(eval $edge_ssl) == "True" ]; then
-    	echo "Edge certificate installed."
-    else
-    	echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert antmedia-cert-edge -n $namespace"
+while [ $attempt -le $max_attempts ]; do
+
+    if [ $(eval $origin_ssl) == "True" ]; then
+    	echo "Origin certificate installed."
+      exit 0
     fi
-fi
 
-if [ $(eval $origin_ssl) == "True" ]; then
-	echo "Origin certificate installed."
-else
-	echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert antmedia-cert-origin -n $namespace"
-fi
+    attempt=$((attempt + 1))
+    if [ $attempt -gt $max_attempts ]; then
+        echo "Origin certificate is not installed. Run this command for debugging: kubectl describe cert antmedia-cert-origin -n $namespace"
+        exit 1
+    fi
+
+    sleep 5
+
+done
+
+
+while [ $attempt -le $max_attempts ]; do
+
+    if [ "$check_edge" != "0" ]; then
+        if [ $(eval $edge_ssl) == "True" ]; then
+          echo "Edge certificate installed."
+          exit 0
+        fi
+
+    attempt=$((attempt + 1))
+    if [ $attempt -gt $max_attempts ]; then
+          echo "Edge certificate is not installed. Run this command for debugging: kubectl describe cert antmedia-cert-edge -n $namespace"
+          exit 1
+    fi
+
+    sleep 5
+done
