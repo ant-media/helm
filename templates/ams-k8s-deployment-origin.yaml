@@ -49,16 +49,30 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}   
         args: ["-g", "{{ .Values.UseGlobalIP }}", "-s", "{{ .Values.UseServerName }}", "-r", "{{ .Values.ReplaceCandidateAddress }}", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}", "-a", "{{ .Values.TurnStunServerURL }}", "-n", "{{ .Values.TurnUsername }}", "-w", "{{ .Values.TurnPassword }}", "-k", "{{ .Values.kafkaURL }}"]
-        {{- if .Values.OriginCpu }}
         livenessProbe:
+          failureThreshold: 3
           httpGet:
-            path: / 
+            path: /
             port: 5080
-          initialDelaySeconds: 30
+            scheme: HTTP
+          initialDelaySeconds: 15
           periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 5080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
         volumeMounts:
         - mountPath: /tmp
           name: temp-volume
+        {{- if .Values.OriginCpu }}  
         resources:
         {{ "requests:" | indent 2 }}
         {{ "cpu:" | indent 4 }} {{ .Values.OriginCpu }}
