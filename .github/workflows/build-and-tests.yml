@@ -45,7 +45,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y python3-pip python3-dev libffi-dev libssl-dev
-        sudo pip3 install python-openstackclient
+        sudo pip3 install python-openstackclient --break-system-packages
 
     - name: server-id
       id: set-server-id
