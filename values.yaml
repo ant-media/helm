@@ -93,8 +93,14 @@ affinity: {}
 
 origin: {}
 edge: {}
-mongoDB: mongo
+
 licenseKey:
+
+mongoDB:
+  external: false
+  connectionString: ""
+  replicaSet: false
+  default: mongo
 
 hostNetwork: true
 
