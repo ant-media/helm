@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-config
+  namespace: {{ .Release.Namespace }}
+data:
+  mongoURL: |
+    {{- if .Values.mongoDB.external }}
+    {{ .Values.mongoDB.connectionString }}
+    {{- else if .Values.mongoDB.replicaSet }}
+    mongodb://mongo-0.mongo.{{ .Release.Namespace }}.svc.cluster.local:27017,mongo-1.mongo.{{ .Release.Namespace }}.svc.cluster.local:27017,mongo-2.mongo.{{ .Release.Namespace }}.svc.cluster.local:27017/?replicaSet=rs0
+    {{- else }}
+    mongodb://{{ .Values.mongoDB.default }}:27017
+    {{- end }}
