@@ -37,13 +37,19 @@ spec:
                 - ant-media-edge
                 - ant-media-origin
             topologyKey: "kubernetes.io/hostname"
-        {{- if .Values.OriginNodeSelector }}
-        {{- with .Values.affinityNode }}
-        {{ toYaml . | nindent 8 }}{{- end }}
-        {{ "values:" | indent 8 }}
-        {{ "-" | indent 8  }}{{ .Values.OriginNodeSelector | indent 1 }}{{- end }}
       hostNetwork: {{ .Values.hostNetwork }}
       {{end}}
+      {{- if and .Values.EdgeNodeSelector.key .Values.EdgeNodeSelector.values }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.EdgeNodeSelector.key }}
+                operator: In
+                values:
+                - {{ .Values.EdgeNodeSelector.values }}
+      {{- end }}
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: ant-media-server

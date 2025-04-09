@@ -82,10 +82,6 @@ autoscalingOrigin:
   targetCPUUtilizationPercentage: 60
   # targetMemoryUtilizationPercentage: 80
 
-OriginNodeSelector: {}
-EdgeNodeSelector: {}
-MongoDBNodeSelector: {}
-IngressNodeSelector: {}
 
 tolerations: []
 
@@ -139,17 +135,18 @@ annotations:
     alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true
   }
 
+OriginNodeSelector:
+  key: ""
+  values: ""
 
+EdgeNodeSelector:
+  key: ""
+  values: ""
 
-affinityNode:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: nodepool
-            operator: In
-            
+MongoDBNodeSelector:
+  key: ""
+  values: ""
+
 OriginCpu: {}
 EdgeCpu: {}
 kafkaURL:
