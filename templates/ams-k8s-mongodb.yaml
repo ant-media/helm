@@ -90,7 +90,10 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 10Gi 
+          storage: 10Gi
+      {{- if .Values.mongoDB.storageClassName }}
+      storageClassName: {{ .Values.mongoDB.storageClassName }}
+      {{- end }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -157,6 +160,9 @@ spec:
         image: mongo:8.0
         ports:
         - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
         resources:
           limits:
             cpu: "2"
@@ -172,6 +178,17 @@ spec:
                 operator: In
                 values:
                 - {{ .Values.MongoDBNodeSelector.values }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+      {{- if .Values.mongoDB.storageClassName }}
+      storageClassName: {{ .Values.mongoDB.storageClassName }}
       {{- end }}
 {{- end }}
 {{- end }}

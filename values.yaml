@@ -92,6 +92,12 @@ edge: {}
 
 licenseKey:
 
+persistence:
+  enabled: true
+  storageClassName: "" 
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
 mongoDB:
   external: false
   connectionString: ""
