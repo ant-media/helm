@@ -161,8 +161,8 @@ spec:
         ports:
         - containerPort: 27017
         volumeMounts:
-        - name: mongo-data
-          mountPath: /data/db
+          - name: mongo-data
+            mountPath: /data/db
         resources:
           limits:
             cpu: "2"
@@ -179,16 +179,9 @@ spec:
                 values:
                 - {{ .Values.MongoDBNodeSelector.values }}
       {{- end }}
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
-      {{- if .Values.mongoDB.storageClassName }}
-      storageClassName: {{ .Values.mongoDB.storageClassName }}
-      {{- end }}
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongo-data
 {{- end }}
 {{- end }}
