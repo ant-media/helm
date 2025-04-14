@@ -90,11 +90,19 @@ affinity: {}
 origin: {}
 edge: {}
 
-licenseKey:
 
-licenseKeyOverride:
-  origin: ""
-  edge: ""
+licenseKey:
+  # The license key for the Ant Media Server
+  # This is commond license key for both Origin and Edge
+  # This is required for the server to run
+  # If you are using a trial version, you can leave this empty
+  # and the server will run in trial mode
+  # licenseKey: "YOUR_LICENSE_KEY"
+
+licenseKey.origin:
+  # If you have a license key for the Origin server, you can set it here
+licenseKey.edge:
+  # If you have a license key for the Edge server, you can set it here
 
 persistence:
   enabled: true
