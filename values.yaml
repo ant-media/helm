@@ -92,11 +92,16 @@ edge: {}
 
 licenseKey:
 
+licenseKeyOverride:
+  origin: ""
+  edge: ""
+
 persistence:
   enabled: true
   storageClassName: "" 
   accessMode: ReadWriteOnce
   size: 10Gi
+
 
 mongoDB:
   external: false
@@ -264,24 +269,4 @@ ingress:
   ##
   secrets: []
 
-persistence:
-  config:
-    enabled: true
-    annotations:
-    "helm.sh/resource-policy": keep
-    ## bazarr configuration data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    ##
-    ## If you want to reuse an existing claim, you can pass the name of the PVC using
-    ## the existingClaim variable
-    # existingClaim: your-claim
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    ## Do not delete the pvc upon helm uninstall
-    skipuninstall: true
+
