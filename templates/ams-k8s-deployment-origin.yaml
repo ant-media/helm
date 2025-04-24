@@ -62,7 +62,7 @@ spec:
                 name: mongodb-config
                 key: mongoURL
           - name: LICENSE_KEY
-            value: {{ .Values.licenseKey.origin | default .Values.licenseKey }}
+            value: "{{ if and .Values.originLicense (not (empty .Values.originLicense.Key)) }}{{ .Values.originLicense.Key }}{{ else }}{{ .Values.licenseKey }}{{ end }}"
 
         livenessProbe:
           failureThreshold: 3
