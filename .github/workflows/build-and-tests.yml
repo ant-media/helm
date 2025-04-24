@@ -273,39 +273,4 @@ jobs:
           sudo apt-get install -y ffmpeg
           ffmpeg -re -i sample_MP4_480.mp4 -t 10 -c copy -f flv rtmp://"$pod_ip_address"/WebRTCAppEE/stream1
         
-  clean:
-    if: ${{ always() }}
-    needs: [setup-runner, local_tests, prepare-and-push]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Delete runner
-      if: ${{ always() }}
-      run: |
-        echo "GITHUB_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
-        RUNNER_ID=$(curl -s -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer $GITHUB_TOKEN" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/$REPO/actions/runners | jq -r '.runners[0].id')
-        
-        echo "Deleting runner with ID: $RUNNER_ID"
-        curl -X DELETE -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer $GITHUB_TOKEN" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/$REPO/actions/runners/$RUNNER_ID
-        
-        echo "Runner deleted successfully."
-    - name: Install Dependencies
-      if: ${{ always() }}
-      run: |
-        sudo apt-get update
-        sudo apt-get remove python3-typing-extensions -y
-        sudo apt-get install -y python3-pip python3-dev libffi-dev libssl-dev
-        sudo pip3 install python-openstackclient
-    - name: Delete CI Instance
-      if: ${{ always() }}
-      run: |
-        SERVER_ID="${{ needs.setup-runner.outputs.server_id }}"
-        echo "server id" $SERVER_ID
-        openstack server delete $SERVER_ID
+
