@@ -1,6 +1,6 @@
 # Match any file or path named .helmignore
 .helmignore
-
+.artifacthub-repo.yml
 # Match any file or path named .git
 .git
 
