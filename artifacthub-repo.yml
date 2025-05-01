@@ -1,4 +1,4 @@
-repositoryID: The ID of the Artifact Hub repository where the packages will be published to (optional, but it enables verified publisher)
+repositoryID: cd632ea5-ff64-4d44-881d-af1741bc1448
 owners: # (optional, used to claim repository ownership)
   - name: Murat Ugur Eminoglu
     email: murat@murat.ws
