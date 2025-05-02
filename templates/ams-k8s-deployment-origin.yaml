@@ -38,7 +38,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       hostNetwork: {{ .Values.hostNetwork }}
       {{end}}
-      {{- if and .Values.OriginNodeSelector.key .Values.OriginNodeSelector.values }}
+      {{- if and .Values.OriginNodeSelector.key }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
