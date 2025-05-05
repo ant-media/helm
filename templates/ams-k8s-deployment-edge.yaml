@@ -37,19 +37,36 @@ spec:
                 - ant-media-edge
                 - ant-media-origin
             topologyKey: "kubernetes.io/hostname"
-        {{- if .Values.OriginNodeSelector }}
-        {{- with .Values.affinityNode }}
-        {{ toYaml . | nindent 8 }}{{- end }}
-        {{ "values:" | indent 8 }}
-        {{ "-" | indent 8  }}{{ .Values.OriginNodeSelector | indent 1 }}{{- end }}
       hostNetwork: {{ .Values.hostNetwork }}
       {{end}}
+      {{- if and .Values.EdgeNodeSelector.key .Values.EdgeNodeSelector.values }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.EdgeNodeSelector.key }}
+                operator: In
+                values:
+                - {{ .Values.EdgeNodeSelector.values }}
+      {{- end }}
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: ant-media-server
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}        
-        args: ["-g", "{{ .Values.UseGlobalIP }}", "-s", "{{ .Values.UseServerName }}", "-r", "{{ .Values.ReplaceCandidateAddress }}", "-m", "cluster", "-h", "{{ .Values.mongoDB }}", "-l", "{{ .Values.licenseKey }}", "-a", "{{ .Values.TurnStunServerURL }}", "-n", "{{ .Values.TurnUsername }}", "-w", "{{ .Values.TurnPassword }}", "-k", "{{ .Values.kafkaURL }}"]
+        args: ["-g", "{{ .Values.UseGlobalIP }}", "-s", "{{ .Values.UseServerName }}", "-r", "{{ .Values.ReplaceCandidateAddress }}", "-m", "cluster", "-h", "$(MONGO_URL)", "-l", "$(LICENSE_KEY)", "-a", "{{ .Values.TurnStunServerURL }}", "-n", "{{ .Values.TurnUsername }}", "-w", "{{ .Values.TurnPassword }}", "-k", "{{ .Values.kafkaURL }}"]
+        env:
+          - name: MONGO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mongodb-config
+                key: mongoURL
+          - name: LICENSE_KEY
+            value: "{{ if and .Values.edgeLicense (not (empty .Values.edgeLicense.Key)) }}{{ .Values.edgeLicense.Key }}{{ else }}{{ .Values.licenseKey }}{{ end }}"
+
+
+
         livenessProbe:
           failureThreshold: 3
           httpGet:

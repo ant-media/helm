@@ -82,10 +82,6 @@ autoscalingOrigin:
   targetCPUUtilizationPercentage: 60
   # targetMemoryUtilizationPercentage: 80
 
-OriginNodeSelector: {}
-EdgeNodeSelector: {}
-MongoDBNodeSelector: {}
-IngressNodeSelector: {}
 
 tolerations: []
 
@@ -93,8 +89,36 @@ affinity: {}
 
 origin: {}
 edge: {}
-mongoDB: mongo
-licenseKey:
+
+
+licenseKey: ""
+# The license key for the Ant Media Server
+# This is commond license key for both Origin and Edge
+# This is required for the server to run
+# If you are using a trial version, you can leave this empty
+# and the server will run in trial mode
+# licenseKey: "YOUR_LICENSE_KEY"
+
+originLicense:
+  Key: ""
+  # If you have a license key for the Origin server, you can set it here
+
+edgeLicense:
+  Key: ""
+  # If you have a license key for the Edge server, you can set it here
+
+persistence:
+  enabled: true
+  storageClassName: "" 
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+
+mongoDB:
+  external: false
+  connectionString: ""
+  replicaSet: false
+  default: mongo
 
 hostNetwork: true
 
@@ -133,17 +157,18 @@ annotations:
     alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true
   }
 
+OriginNodeSelector:
+  key: ""
+  values: ""
 
+EdgeNodeSelector:
+  key: ""
+  values: ""
 
-affinityNode:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: nodepool
-            operator: In
-            
+MongoDBNodeSelector:
+  key: ""
+  values: ""
+
 OriginCpu: {}
 EdgeCpu: {}
 kafkaURL:
@@ -255,24 +280,4 @@ ingress:
   ##
   secrets: []
 
-persistence:
-  config:
-    enabled: true
-    annotations:
-    "helm.sh/resource-policy": keep
-    ## bazarr configuration data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    ##
-    ## If you want to reuse an existing claim, you can pass the name of the PVC using
-    ## the existingClaim variable
-    # existingClaim: your-claim
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    ## Do not delete the pvc upon helm uninstall
-    skipuninstall: true
+
