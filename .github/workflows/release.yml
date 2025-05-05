@@ -3,6 +3,8 @@ name: Ant Media Server Release
 on:
   push:
     branches: [ "add_helm_repo" ]
+    tags:
+      - 'v*.*.*'
     paths-ignore:
       - '**/README.md'
       - '**/.github/**'
