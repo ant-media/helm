@@ -3,9 +3,20 @@
   <a href="https://hub.docker.com/repository/docker/antmedia/enterprise" alt="Docker pulls">
     <img src="https://img.shields.io/docker/pulls/antmedia/enterprise" /></a>
 
-# Ant Media Server 
+## 🚀 Kubernetes-Ready Video Streaming
 
-Ant Media Server Helm chart for Kubernetes
+The **Ant Media Server Helm chart** simplifies deployment on Kubernetes, enabling auto-scaling, redundancy, and edge-origin streaming for robust, global video delivery.
+
+---
+
+### 🔍 Features
+
+- Fully supports **Kubernetes Edge/Origin architecture**
+- **MongoDB integration** for stream data storage
+- Configurable **Ingress controller** for secure access
+- **Persistent storage** with PVCs
+- **Load-balanced** streaming delivery
+- **Quick deployment** and easy upgrades
 
 ## Introduction
 Ant Media Server installs the following
@@ -178,3 +189,17 @@ helm install antmedia antmedia/antmedia \
   --namespace antmedia --create-namespace
 
 ```
+
+## 📄 Resources
+
+- **[Helm Chart Guide](https://antmedia.io/helm-chart-deployment-guide)**
+- **[Cluster Architecture Diagram](https://antmedia.io/docs/cluster-architecture)**
+- **[Ant Media Docs](https://docs.antmedia.io)**
+
+---
+
+## 💬 Need Help?
+
+- **[Join the Community](https://github.com/ant-media/Ant-Media-Server/discussions)**
+- **[Request a Demo](https://antmedia.io/request-a-demo)**
+- **[Contact Us](http://antmedia.io)**
