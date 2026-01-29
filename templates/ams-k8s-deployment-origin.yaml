@@ -54,7 +54,31 @@ spec:
       - name: ant-media-server
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
         imagePullPolicy: {{ .Values.image.pullPolicy }}   
-        args: ["-g", "{{ .Values.UseGlobalIP }}", "-s", "{{ .Values.UseServerName }}", "-r", "{{ .Values.ReplaceCandidateAddress }}", "-m", "cluster", "-h", "$(MONGO_URL)", "-l", "$(LICENSE_KEY)", "-a", "{{ .Values.TurnStunServerURL }}", "-n", "{{ .Values.TurnUsername }}", "-w", "{{ .Values.TurnPassword }}", "-k", "{{ .Values.kafkaURL }}"]
+        args:
+          - -g
+          - "{{ .Values.UseGlobalIP }}"
+          - -s
+          - "{{ .Values.UseServerName }}"
+          - -r
+          - "{{ .Values.ReplaceCandidateAddress }}"
+          - -m
+          - cluster
+          - -h
+          - "$(MONGO_URL)"
+          - -l
+          - "$(LICENSE_KEY)"
+          {{- if not (empty .Values.TurnStunServerURL) }}
+          - -a
+          - "$(TURN_SERVER)"
+          - -n
+          - "$(TURN_USERNAME)"
+          - -w
+          - "$(TURN_PASSWORD)"
+          {{- end }}
+          {{- if not (empty .Values.kafkaURL) }}
+          - -k
+          - "{{ .Values.kafkaURL }}"
+          {{- end }}
         env:
           - name: MONGO_URL
             valueFrom:
@@ -63,6 +87,14 @@ spec:
                 key: mongoURL
           - name: LICENSE_KEY
             value: "{{ if and .Values.originLicense (not (empty .Values.originLicense.Key)) }}{{ .Values.originLicense.Key }}{{ else }}{{ .Values.licenseKey }}{{ end }}"
+          {{- if not (empty .Values.TurnStunServerURL) }}
+          - name: TURN_SERVER
+            value: "{{ .Values.TurnStunServerURL }}"
+          - name: TURN_USERNAME
+            value: "{{ .Values.TurnUsername }}"
+          - name: TURN_PASSWORD
+            value: "{{ .Values.TurnPassword }}"
+          {{- end }}
 
         livenessProbe:
           failureThreshold: 3
