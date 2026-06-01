@@ -2,20 +2,6 @@ apiVersion: v1
 entries:
   antmedia:
   - apiVersion: v2
-    appVersion: 3.0.3
-    created: "2026-06-01T07:33:17.945495377Z"
-    dependencies:
-    - name: ingress-nginx
-      repository: https://kubernetes.github.io/ingress-nginx
-      version: <= 4.4.0
-    description: A Helm chart for Kubernetes
-    digest: 98ad462833ff660a39271c6fbbb877a70afeff68b0dbc5d0f06f6ac30e2ca12d
-    name: antmedia
-    type: application
-    urls:
-    - https://ant-media.github.io/helm/antmedia-3.0.3.tgz
-    version: 3.0.3
-  - apiVersion: v2
     appVersion: 2.17.1
     created: "2026-02-23T06:03:32.138587601Z"
     dependencies:
@@ -179,7 +165,7 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.5.1
-    created: "2026-06-01T07:33:17.94780238Z"
+    created: "2026-02-23T06:03:32.141537675Z"
     description: Ingress controller for Kubernetes using NGINX as a reverse proxy
       and load balancer
     digest: 5c5ffcd4a19377f9e2eeb40fd8c0a2a7a9f851db74453247c357c83e1775c330
@@ -202,12 +188,12 @@ entries:
   monitoring:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-06-01T07:33:17.948908643Z"
+    created: "2026-02-23T06:03:32.142417329Z"
     description: A Helm chart for Kubernetes
-    digest: b671765fd07df47ebf71d2429dd09e988a060c5f2c03ac492fab5783aab39808
+    digest: 2547d75208a8b77ce1f83d5720b92d140eb0f63eabf8b0a88ca88045174ad7ae
     name: monitoring
     type: application
     urls:
     - https://ant-media.github.io/helm/monitoring/monitoring-1.0.0.tgz
     version: 1.0.0
-generated: "2026-06-01T07:33:17.940420607Z"
+generated: "2026-02-23T06:03:32.134320755Z"
