@@ -317,7 +317,9 @@ jobs:
     - name: Delete CI Instance
       if: ${{ always() }}
       run: |
-        SERVER_ID="${{ needs.setup-runner.outputs.server_id }}"
+        REPO=$(echo "$REPO" | cut -d'/' -f2)
+        BRANCH_NAME="${{ github.head_ref }}"
+        SERVER_ID="ci-$REPO-$BRANCH_NAME"
         echo "server id" $SERVER_ID
         openstack server delete $SERVER_ID
 
