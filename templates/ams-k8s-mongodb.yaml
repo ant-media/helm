@@ -139,6 +139,7 @@ spec:
   ports:
   - protocol: TCP
     port: 27017
+    name: mongodb
 ---
 apiVersion: apps/v1
 kind: Deployment
