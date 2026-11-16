@@ -1,12 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
 apt-get update && apt-get install jq curl -y -qq
 GITHUB_TOKEN=""
-echo $GITHUB_TOKEN > /tmp/token.txt
-RUNNER_VERSION="2.317.0"
+RUNNER_VERSION=$(curl -fsSL https://api.github.com/repos/actions/runner/releases/latest | jq -er '.tag_name | ltrimstr("v")')
 #RUNNER_ORG="ant-media/helm"
 RUNNER_ORG=""
-RUNNER_TOKEN=$(curl -s -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/$RUNNER_ORG/actions/runners/registration-token | jq -r .token)
+RUNNER_TOKEN=$(curl -fsSL -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/$RUNNER_ORG/actions/runners/registration-token | jq -er '.token | select(type == "string" and length > 0)')
 
 # Create dedicated user
 useradd -m -d /home/runner -s /bin/bash runner
@@ -17,8 +17,10 @@ echo "runner ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 cd /home/runner
 mkdir -p actions-runner
 cd actions-runner
-curl -o actions-runner-linux-x64-$RUNNER_VERSION.tar.gz -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+curl -fSL -o actions-runner-linux-x64-$RUNNER_VERSION.tar.gz https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
 tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+./bin/installdependencies.sh
+chown -R runner:runner /home/runner/actions-runner
 
 # Configure runner
 su - runner -c "
